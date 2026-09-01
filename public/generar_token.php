@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/credenciales.php';
 
 // Esta URL DEBE ser exactamente la misma que pusiste en el Dashboard de Spotify
 $redirect_uri = 'http://127.0.0.1:3000/public/generar_token.php';;
-$scope = 'user-read-currently-playing';
+$scope = 'user-read-currently-playing user-read-recently-played';
 
 // Paso 1: Si no hay código en la URL, redirigimos a Spotify para iniciar sesión
 if (!isset($_GET['code'])) {

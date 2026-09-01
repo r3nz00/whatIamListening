@@ -29,32 +29,40 @@ async function actualizarEstadoEnVivo() {
     
     cancionSonando = data.sonando;
 
-    if (data.sonando) {
+    // Si recibimos un título (ya sea en vivo o del historial)
+    if (data.titulo) {
       trackCover.src = data.portada;
       trackCover.classList.remove("oculto");
-      trackTitle.textContent = data.titulo;
       trackArtist.textContent = data.artista;
-      btnLetras.classList.remove("oculto");
       
-      // Guardamos el tiempo exacto para la sincronización
-      progresoActualMs = data.progreso_ms;
-      ultimaActualizacionTimestamp = Date.now();
+      if (data.sonando) {
+        // Reproducción en vivo
+        trackTitle.textContent = data.titulo;
+        btnLetras.classList.remove("oculto");
+        
+        progresoActualMs = data.progreso_ms;
+        ultimaActualizacionTimestamp = Date.now();
 
-      // Si cambió la canción, reseteamos las letras
-      if (tituloAnterior !== data.titulo) {
-        tituloAnterior = data.titulo;
-        letrasSincronizadas = [];
-        if (panelLetras.classList.contains("abierto")) {
-          cargarLetras();
+        if (tituloAnterior !== data.titulo) {
+          tituloAnterior = data.titulo;
+          letrasSincronizadas = [];
+          if (panelLetras.classList.contains("abierto")) {
+            cargarLetras();
+          }
         }
+      } else {
+        // En pausa (Historial)
+        trackTitle.textContent = data.titulo + " (Última escuchada)";
+        btnLetras.classList.add("oculto");
+        panelLetras.classList.remove("abierto"); 
+        btnLetras.classList.remove("activo");
       }
     } else {
+      // Fallback extremo por si la cuenta de Spotify es nueva y no tiene historial
       trackCover.classList.add("oculto");
       trackTitle.textContent = "Sin reproducción activa";
       trackArtist.textContent = "Spotify está en pausa";
       btnLetras.classList.add("oculto");
-      panelLetras.classList.remove("abierto"); 
-      btnLetras.classList.remove("activo");
     }
   } catch (error) {
     trackTitle.textContent = "Estado no disponible";

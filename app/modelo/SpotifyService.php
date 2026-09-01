@@ -67,26 +67,47 @@ class SpotifyService {
         return $datos['access_token'] ?? null;
     }
 
-    public static function obtenerReproduccionActual() {
+public static function obtenerReproduccionActual() {
         $token = self::obtenerTokenUsuario();
         if (!$token) return null;
 
+        // 1. Buscamos qué está sonando ahora en vivo
         $ch = curl_init('https://api.spotify.com/v1/me/player/currently-playing');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $token
         ]);
-
         $respuesta = curl_exec($ch);
         $codigoHttp = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        // Spotify devuelve 204 cuando no hay música sonando
-        if ($codigoHttp === 204 || empty($respuesta)) {
-            return ['is_playing' => false];
+        // Si está sonando algo ahora mismo, lo devolvemos
+        if ($codigoHttp !== 204 && !empty($respuesta)) {
+            $datos = json_decode($respuesta, true);
+            if (isset($datos['item'])) return $datos;
         }
 
-        return json_decode($respuesta, true);
+        // 2. Si está en pausa, consultamos la última canción del historial
+        $ch2 = curl_init('https://api.spotify.com/v1/me/player/recently-played?limit=1');
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $token
+        ]);
+        $respuesta2 = curl_exec($ch2);
+        curl_close($ch2);
+
+        $datos2 = json_decode($respuesta2, true);
+        
+        // Si hay historial, engañamos al frontend mandándolo como si estuviera en pausa
+        if (isset($datos2['items']) && count($datos2['items']) > 0) {
+            $ultimoTrack = $datos2['items'][0]['track'];
+            return [
+                'is_playing' => false,
+                'item' => $ultimoTrack
+            ];
+        }
+
+        return ['is_playing' => false];
     }
 
  // =========================================================

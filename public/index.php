@@ -11,7 +11,11 @@
 </head>
 <body>
   <main class="contenedor-principal">
-
+<header class="cabecera-principal">
+      <h1>whatIamListening</h1>
+      <a href="about.html" class="enlace-acerca">Acerca de</a>
+    </header>
+    
     <!-- Tarjeta de Estado: Escuchando en tiempo real -->
     <article class="tarjeta-reproductor" id="spotify-card">
       <header class="tarjeta-encabezado">
@@ -58,7 +62,7 @@
     <footer class="pie-pagina">
       <p>
         ¿Quieres este widget en tu web? 
-        <a href="https://github.com/TU_USUARIO/TU_REPOSITORIO" target="_blank" rel="noopener noreferrer" class="enlace-repositorio">
+        <a href="https://github.com/r3nz00/whatIamListening/" target="_blank" rel="noopener noreferrer" class="enlace-repositorio">
           Clona la plantilla en GitHub
         </a>
       </p>

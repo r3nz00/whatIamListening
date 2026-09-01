@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>whatIamListening - Acerca de</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acerca de - whatIamListening</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <h1>Sobre mí</h1>
-    <p>Hola.</p>
-    <a href="index.php">Inicio</a>
+  <main class="contenedor-principal">
+    
+    <header class="cabecera-principal">
+      <h1>whatIamListening</h1>
+      <a href="index.php" class="enlace-acerca">Volver al inicio</a>
+    </header>
+
+    <section class="tarjeta-recomendacion">
+      <header class="tarjeta-encabezado">
+        <h2 class="tarjeta-subtitulo">Sobre mí y el proyecto</h2>
+      </header>
+      
+      <article class="cuerpo-texto">
+        <p>
+          ¡Hola! Soy Renzo, un estudiante y desarrollador radicado en Montevideo, Uruguay. Me apasiona crear herramientas útiles, experimentar con código (especialmente en entornos Linux) y, por supuesto, escuchar buena música durante todo el proceso.
+        </p>
+        <p>
+          <strong>whatIamListening</strong> nació como un proyecto personal para unir el desarrollo web con mi día a día. Quería una forma limpia y directa de compartir en tiempo real los temas que escucho y permitir que otras personas interactúen recomendándome sus canciones favoritas.
+        </p>
+        <p>
+          Técnicamente, el widget está construido desde cero bajo una arquitectura MVC utilizando PHP, Vanilla JavaScript y una integración directa con la API oficial de Spotify para obtener los metadatos en milisegundos.
+        </p>
+        <p>
+          Si te interesa explorar el código fuente de este proyecto, revisar otras de mis herramientas de software o simplemente conectar, puedes darte una vuelta por mi repositorio.
+        </p>
+        
+        <!-- Enlace semántico estilizado como botón -->
+        <a href="https://github.com/r3nz00" target="_blank" rel="noopener noreferrer" class="enlace-boton">
+          Visitar mi perfil de GitHub
+        </a>
+      </article>
+    </section>
+
+  </main>
 </body>
 </html>

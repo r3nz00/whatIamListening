@@ -26,16 +26,15 @@ body {
   padding: 1.5rem;
 }
 
-/* Contenedor principal */
 .contenedor-principal {
   width: 100%;
   max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  
 }
 
-/* Tarjetas semánticas */
 .tarjeta-reproductor,
 .tarjeta-recomendacion {
   background-color: var(--color-superficie);
@@ -56,7 +55,6 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Reproductor en vivo */
 .reproductor-cuerpo {
   display: flex;
   align-items: center;
@@ -98,7 +96,6 @@ body {
   text-overflow: ellipsis;
 }
 
-/* Formulario y Buscador */
 .grupo-campos {
   border: none;
   position: relative;
@@ -128,7 +125,6 @@ body {
   border-color: var(--color-spotify);
 }
 
-/* Lista desplegable de resultados */
 .lista-desplegable {
   list-style: none;
   position: absolute;
@@ -167,7 +163,6 @@ body {
   color: var(--color-texto-secundario);
 }
 
-/* Feedback de estado */
 .mensaje-retroalimentacion {
   display: block;
   margin-top: 0.75rem;
@@ -175,7 +170,6 @@ body {
   color: var(--color-spotify);
 }
 
-/* Pie de página */
 .pie-pagina {
   text-align: center;
   font-size: 0.8rem;
@@ -206,4 +200,60 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.cabecera-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  margin-bottom: 0.5rem;
+}
+
+.cabecera-principal h1 {
+  font-size: 1.5rem;
+}
+
+.enlace-acerca {
+  color: var(--color-texto-secundario);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.enlace-acerca:hover {
+  color: var(--color-spotify);
+}
+
+.cuerpo-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem; 
+  font-size: 0.95rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
+}
+
+.cuerpo-texto strong {
+  color: var(--color-texto-primario);
+}
+/* Botón de enlace destacado (GitHub) */
+.enlace-boton {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-borde);
+  border-radius: 6px;
+  color: var(--color-texto-primario);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.enlace-boton:hover {
+  background-color: var(--color-superficie-hover);
+  border-color: var(--color-spotify);
+  color: var(--color-spotify);
 }

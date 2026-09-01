@@ -257,3 +257,82 @@ body {
   border-color: var(--color-spotify);
   color: var(--color-spotify);
 }
+/* --- Botón de letras --- */
+.boton-letras {
+  margin-left: auto; /* Empuja el botón hacia la derecha de la tarjeta */
+  background: none;
+  border: none;
+  color: var(--color-texto-secundario);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.boton-letras:hover {
+  color: var(--color-spotify);
+  transform: scale(1.1);
+}
+
+.boton-letras.activo {
+  color: var(--color-spotify);
+}
+
+/* --- Panel lateral (Aside) --- */
+.panel-lateral {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  height: 440px; /* Altura similar al main */
+  display: flex;
+  flex-direction: column;
+  
+  /* Animación de expansión */
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  margin-left: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Curva suave de animación */
+}
+
+/* Clase que se activa mediante JS */
+.panel-lateral.abierto {
+  width: 380px;
+  padding: 1.25rem;
+  opacity: 1;
+  margin-left: 1.5rem; /* Separación con el main */
+}
+
+/* Contenedor de las letras */
+.letras-scroll {
+  overflow-y: auto;
+  flex-grow: 1;
+  margin-top: 1rem;
+  padding-right: 1rem; /* Margen extra de seguridad */
+  scrollbar-width: none; 
+}
+.letras-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Línea inactiva (difuminada) */
+.linea-letra {
+  font-size: 1.2rem; /* Tamaño base fijo para evitar recálculos lentos */
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 1.2rem;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: left center;
+  cursor: default;
+  max-width: 85%; /* Obliga al texto a bajar de línea dejando espacio de sobra */
+  will-change: transform, color; /* Optimiza la fluidez de la animación */
+}
+
+/* Línea activa (Iluminada y más grande) */
+.linea-letra.activa {
+  color: #FFFFFF;
+  font-weight: 700;
+  transform: scale(1.15); /* Crece fluidamente ocupando el espacio que dejamos libre */
+  text-shadow: 0px 0px 12px rgba(255, 255, 255, 0.3);
+}

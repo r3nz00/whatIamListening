@@ -21,7 +21,8 @@ if ($estado && isset($estado['item'])) {
         'titulo' => $estado['item']['name'],
         'artista' => $estado['item']['artists'][0]['name'],
         'portada' => $estado['item']['album']['images'][0]['url'] ?? '',
-        'url' => $estado['item']['external_urls']['spotify'] ?? ''
+        'url' => $estado['item']['external_urls']['spotify'] ?? '',
+        'progreso_ms' => $estado['progress_ms'] ?? 0 
     ]);
 } else {
     echo json_encode(['sonando' => false]);

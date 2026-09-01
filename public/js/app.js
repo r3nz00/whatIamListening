@@ -8,6 +8,7 @@ const mensajeEstado = document.getElementById("mensaje-estado");
 const btnLetras = document.getElementById("btn-letras");
 const panelLetras = document.getElementById("panel-letras");
 const contenedorLetras = document.getElementById("contenedor-letras");
+const btnCerrarLetras = document.getElementById("btn-cerrar-letras");
 
 let temporizadorBusqueda = null;
 
@@ -165,6 +166,11 @@ btnLetras.addEventListener("click", () => {
   if (panelLetras.classList.contains("abierto") && letrasSincronizadas.length === 0) {
     cargarLetras();
   }
+  // Cerrar el panel desde el botón "Atrás" (en móviles)
+btnCerrarLetras.addEventListener("click", () => {
+  panelLetras.classList.remove("abierto");
+  btnLetras.classList.remove("activo");
+});
 });
 
 inputBusqueda.addEventListener("input", (evento) => {

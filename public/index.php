@@ -78,11 +78,21 @@
     </footer>
   </main> <!-- Aquí termina tu contenedor principal -->
 
-  <!-- Panel lateral para las letras -->
+<!-- Panel lateral para las letras -->
   <aside id="panel-letras" class="panel-lateral">
-    <header class="tarjeta-encabezado">
+    <header class="tarjeta-encabezado cabecera-letras">
       <h2 class="tarjeta-titulo">Letra</h2>
+      
+      <!-- Nuevo botón para móviles -->
+      <button id="btn-cerrar-letras" class="boton-cerrar" aria-label="Volver al reproductor">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Atrás</span>
+      </button>
     </header>
+    
     <article id="contenedor-letras" class="letras-scroll">
       <p id="texto-letras" class="mensaje-letras">Presiona el botón para buscar la letra...</p>
     </article>

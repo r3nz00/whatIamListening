@@ -344,3 +344,48 @@ body {
   line-height: 1.5;
   max-width: 95%;
 }
+/* --- Cabecera del panel de letras y botón atrás --- */
+.cabecera-letras {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.boton-cerrar {
+  display: none; /* Se oculta por defecto en PC */
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--color-texto-secundario);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.boton-cerrar:hover {
+  color: var(--color-spotify);
+}
+
+/* --- Responsive Design (Móviles y Tablets) --- */
+@media (max-width: 850px) {
+  
+  /* El panel pasa a ser pantalla completa */
+  .panel-lateral.abierto {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    z-index: 100;
+    padding: 1.5rem;
+  }
+
+  /* Mostramos el botón de ir atrás */
+  .boton-cerrar {
+    display: flex;
+  }
+}

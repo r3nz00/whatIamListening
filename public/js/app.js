@@ -18,6 +18,7 @@ let ultimaActualizacionTimestamp = 0;
 let cancionSonando = false;
 let animacionFrame = null;
 let tituloAnterior = "";
+let enCooldown = false;
 
 // 1. Obtener estado en tiempo real
 async function actualizarEstadoEnVivo() {
@@ -59,11 +60,12 @@ async function actualizarEstadoEnVivo() {
   }
 }
 
-// 2. Analizador de formato LRC (Extrae los tiempos)
+// 2. Analizador de formato LRC (Extrae los tiempos - VERSIÓN MEJORADA)
 function parsearLRC(lrcText) {
   const lineas = lrcText.split('\n');
   const resultado = [];
-  const regex = /\[(\d{2}):(\d{2}\.\d{2,3})\](.*)/;
+  // Regex más permisiva para evitar errores si la base de datos omite milisegundos
+  const regex = /\[(\d+):(\d+(?:\.\d+)?)\](.*)/;
 
   lineas.forEach(linea => {
     const match = linea.match(regex);
@@ -129,7 +131,7 @@ async function cargarLetras() {
     contenedorLetras.innerHTML = ''; // Limpiamos contenedor
 
     if (data.syncedLyrics) {
-      // Tiene letras sincronizadas
+      // PLAN A: Tiene letras sincronizadas
       letrasSincronizadas = parsearLRC(data.syncedLyrics);
       letrasSincronizadas.forEach(linea => {
         const p = document.createElement('p');
@@ -138,8 +140,14 @@ async function cargarLetras() {
         contenedorLetras.appendChild(p);
       });
     } else if (data.plainLyrics) {
-      // Tiene letras pero no sincronizadas
-      contenedorLetras.innerHTML = `<p class="linea-letra activa">${data.plainLyrics}</p>`;
+      // PLAN B: No hay sincronización, mostramos texto plano formateado
+      const lineasPlanas = data.plainLyrics.split('\n');
+      lineasPlanas.forEach(linea => {
+        const p = document.createElement('p');
+        p.className = 'linea-letra-plana'; // Usamos una clase nueva
+        p.textContent = linea || '\u00A0'; // El código final respeta renglones vacíos
+        contenedorLetras.appendChild(p);
+      });
       letrasSincronizadas = [];
     } else {
       contenedorLetras.innerHTML = '<p class="linea-letra activa">No se encontraron letras.</p>';
@@ -200,9 +208,18 @@ function renderizarResultados(canciones) {
 }
 
 async function enviarRecomendacion(track) {
+  // Verificamos si el usuario está bloqueado por el límite de tiempo
+  if (enCooldown) {
+    mensajeEstado.style.color = "red";
+    mensajeEstado.textContent = "Espera 15 segundos antes de recomendar otra canción.";
+    return;
+  }
+
   listaResultados.innerHTML = "";
   inputBusqueda.value = "";
+  mensajeEstado.style.color = "var(--color-spotify)";
   mensajeEstado.textContent = "Enviando recomendación...";
+
   try {
     const respuesta = await fetch("../app/controlador/recomendar.php", {
       method: "POST",
@@ -214,12 +231,28 @@ async function enviarRecomendacion(track) {
         portada: track.album.images[0]?.url || ""
       })
     });
+
     if (respuesta.ok) {
       mensajeEstado.textContent = `¡"${track.name}" recomendada con éxito!`;
+      
+      // Activamos el cooldown de 15 segundos
+      enCooldown = true;
+      inputBusqueda.disabled = true; // Bloqueamos la barra de búsqueda visualmente
+      inputBusqueda.placeholder = "Espera 15 segundos...";
+      
+      setTimeout(() => {
+        enCooldown = false;
+        inputBusqueda.disabled = false;
+        inputBusqueda.placeholder = "Escribe el nombre de un tema o artista...";
+        mensajeEstado.textContent = ""; // Limpiamos el texto al terminar
+      }, 15000); // 15000 milisegundos = 15 segundos
+
     } else {
+      mensajeEstado.style.color = "red";
       mensajeEstado.textContent = "No se pudo procesar la recomendación.";
     }
   } catch (error) {
+    mensajeEstado.style.color = "red";
     mensajeEstado.textContent = "Error de conexión con el servidor.";
   }
 }

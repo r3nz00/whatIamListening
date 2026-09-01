@@ -89,10 +89,9 @@ class SpotifyService {
         return json_decode($respuesta, true);
     }
 
+ // =========================================================
+    // 3. MÉTODO PARA GUARDAR RECOMENDACIONES Y NOTIFICAR
     // =========================================================
-    // 3. MÉTODO PARA GUARDAR RECOMENDACIONES (JSON Local)
-    // =========================================================
-
     public static function guardarRecomendacion($titulo, $artista, $enlace, $portada) {
         $rutaArchivo = __DIR__ . '/../../recomendaciones.json';
         
@@ -112,10 +111,38 @@ class SpotifyService {
         }
 
         array_unshift($datosActuales, $nuevaRecomendacion);
-
         $exito = file_put_contents($rutaArchivo, json_encode($datosActuales, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         
+        // Si se guardó en el JSON con éxito, enviamos el mensaje
+        if ($exito) {
+            self::notificarTelegram($titulo, $artista, $enlace);
+        }
+        
         return $exito !== false;
+    }
+
+    // Nueva función que conecta con la API de Telegram
+    private static function notificarTelegram($titulo, $artista, $enlace) {
+        if (!defined('TELEGRAM_BOT_TOKEN') || !defined('TELEGRAM_CHAT_ID')) return;
+
+        $texto = "🎵 <b>¡Nueva recomendación musical!</b>\n\n";
+        $texto .= "<b>Tema:</b> " . $titulo . "\n";
+        $texto .= "<b>Artista:</b> " . $artista . "\n";
+        $texto .= "<a href='" . $enlace . "'>Escuchar en Spotify</a>";
+
+        $url = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendMessage";
+        
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+            'chat_id' => TELEGRAM_CHAT_ID,
+            'text' => $texto,
+            'parse_mode' => 'HTML',
+            'disable_web_page_preview' => false // false = muestra la previsualización del enlace
+        ]));
+        curl_exec($ch);
+        curl_close($ch);
     }
 }
 ?>

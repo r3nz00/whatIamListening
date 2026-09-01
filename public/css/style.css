@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-fondo: #121212;
+  --color-superficie: #181818;
+  --color-superficie-hover: #282828;
+  --color-input: #242424;
+  --color-texto-primario: #FFFFFF;
+  --color-texto-secundario: #B3B3B3;
+  --color-spotify: #1DB954;
+  --color-borde: #333333;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto-primario);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+/* Contenedor principal */
+.contenedor-principal {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Tarjetas semánticas */
+.tarjeta-reproductor,
+.tarjeta-recomendacion {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.tarjeta-encabezado {
+  margin-bottom: 1rem;
+}
+
+.tarjeta-titulo,
+.tarjeta-subtitulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Reproductor en vivo */
+.reproductor-cuerpo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.portada-contenedor {
+  flex-shrink: 0;
+}
+
+.portada-imagen {
+  width: 68px;
+  height: 68px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
+.metadatos-pista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+.pista-titulo {
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pista-artista {
+  font-size: 0.875rem;
+  color: var(--color-texto-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Formulario y Buscador */
+.grupo-campos {
+  border: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.etiqueta-busqueda {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+}
+
+.campo-texto {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-input);
+  color: var(--color-texto-primario);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.campo-texto:focus {
+  border-color: var(--color-spotify);
+}
+
+/* Lista desplegable de resultados */
+.lista-desplegable {
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-superficie-hover);
+  border: 1px solid var(--color-borde);
+  border-radius: 0 0 6px 6px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 20;
+}
+
+.item-cancion {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-bottom: 1px solid var(--color-borde);
+  transition: background-color 0.15s ease;
+}
+
+.item-cancion:hover {
+  background-color: #333333;
+}
+
+.item-nombre {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.item-artista {
+  font-size: 0.8rem;
+  color: var(--color-texto-secundario);
+}
+
+/* Feedback de estado */
+.mensaje-retroalimentacion {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--color-spotify);
+}
+
+/* Pie de página */
+.pie-pagina {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-texto-secundario);
+}
+
+.enlace-repositorio {
+  color: var(--color-texto-primario);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.enlace-repositorio:hover {
+  color: var(--color-spotify);
+}
+
+.oculto {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
